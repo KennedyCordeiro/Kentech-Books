@@ -1,4 +1,4 @@
-import React, { ReactNode, ButtonHTMLAttributes } from "react";
+import { ReactNode, ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const ButtonStart = styled.button`

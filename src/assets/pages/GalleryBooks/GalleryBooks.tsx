@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as C from "./GalleryBooks.styled";
 import { Books } from "./Books";
 import Card from "../../components/Card/Card";
@@ -13,7 +13,7 @@ interface BookProps {
 
 const GalleryBooks = () => {
   const [cardVisual, setCardVisual] = useState(false);
-
+  const styles = { width: "2rem", height: "2rem", cursor: "pointer" };
   const handleTypeVisual = () => {
     setCardVisual(!cardVisual);
   };
@@ -23,17 +23,34 @@ const GalleryBooks = () => {
       <C.Title>
         Todos os Livros
         {cardVisual ? (
-          <TableIcon
-            style={{ width: "2rem", height: "2rem", cursor: "pointer" }}
-            onClick={handleTypeVisual}
-          />
+          <TableIcon style={styles} onClick={handleTypeVisual} />
         ) : (
-          <CardStackIcon
-            style={{ width: "2rem", height: "2rem", cursor: "pointer" }}
-            onClick={handleTypeVisual}
-          />
+          <CardStackIcon style={styles} onClick={handleTypeVisual} />
         )}
       </C.Title>
+
+      <C.ResponsiveTable>
+        <li className="table-header">
+          <div className="col col-1">Título</div>
+          <div className="col col-2">Autor</div>
+          <div className="col col-3">Páginas</div>
+        </li>
+
+        {Books.map((book, index) => (
+          <li className="table-row" key={index}>
+            <div className="col col-1" data-label="Título">
+              {book.title}
+            </div>
+            <div className="col col-2" data-label="Autor">
+              {book.author}
+            </div>
+            <div className="col col-3" data-label="Páginas">
+              {book.pages}
+            </div>
+          </li>
+        ))}
+      </C.ResponsiveTable>
+
       <C.GalleryCards>
         {Books.map((book: BookProps, index) => (
           <Card
