@@ -5,11 +5,12 @@ interface CardProps {
   author: string;
   title: string;
   pages?: number;
+  delay?: number;
 }
 
-const Card = ({ author, title, pages }: CardProps) => {
+const Card = ({ author, title, pages, delay }: CardProps) => {
   return (
-    <div id="cards" className="hidden">
+    <C.CardAnimation style={{ animationDelay: `${delay}s` }}>
       <C.CardContainer>
         <img src={BookImg} alt="Book img" />
         <C.Line />
@@ -19,7 +20,7 @@ const Card = ({ author, title, pages }: CardProps) => {
           {pages && <C.Pages> {pages} Páginas</C.Pages>}
         </C.Content>
       </C.CardContainer>
-    </div>
+    </C.CardAnimation>
   );
 };
 

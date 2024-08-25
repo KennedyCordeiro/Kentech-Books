@@ -59,18 +59,20 @@ export const ResponsiveTable = styled.ul`
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
   }
   .col-1 {
-    flex-basis: 10%;
+    flex-basis: 30%;
+    font-weight: 500;
   }
   .col-2 {
-    flex-basis: 40%;
+    flex-basis: 20%;
+    font-weight: 400;
   }
   .col-3 {
-    flex-basis: 25%;
+    flex-basis: 15%;
+    font-weight: 600;
   }
 
   @media (width <= 1024px) {
     .table-header {
-      width: 100%;
       display: flex;
     }
     li {
@@ -82,13 +84,6 @@ export const ResponsiveTable = styled.ul`
     .col {
       display: flex;
       padding: 10px 0;
-      &:before {
-        color: #6c7a89;
-        padding-right: 10px;
-        content: attr(data-label);
-        flex-basis: 50%;
-        text-align: right;
-      }
     }
   }
 `;

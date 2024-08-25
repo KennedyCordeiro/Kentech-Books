@@ -12,7 +12,7 @@ export const Container = styled.section`
   gap: 0.5rem;
 
   @media (width <= 1024px) {
-    height: 80dvh;
+    height: 90dvh;
   }
 `;
 

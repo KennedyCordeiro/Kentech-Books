@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const CardContainer = styled.div`
   width: 100%;
@@ -63,4 +63,19 @@ export const Pages = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+const SlideLeft = keyframes`
+  0% {
+    transform: translateZ(700px) translateX(-400px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0) translateX(0);
+    opacity: 1;
+  }
+`;
+
+export const CardAnimation = styled.div`
+  animation: ${SlideLeft} 1s cubic-bezier(0.23, 1, 0.32, 1) both;
 `;
