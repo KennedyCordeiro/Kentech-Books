@@ -1,4 +1,3 @@
-import React from "react";
 import * as C from "./Card.styled";
 import BookImg from "../../images/Books.png";
 
