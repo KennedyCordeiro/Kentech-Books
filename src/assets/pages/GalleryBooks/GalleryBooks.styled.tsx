@@ -32,7 +32,7 @@ export const Title = styled.div`
 
 export const GalleryCards = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
   align-items: baseline;
   width: 85%;
   height: auto;
@@ -62,8 +62,9 @@ export const ResponsiveTable = styled.ul`
     letter-spacing: 0.03em;
   }
   .table-row {
-    background-color: #ffffff;
+    background-color: var(--primary-color);
     box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
   }
   .col-1 {
     flex-basis: 30%;

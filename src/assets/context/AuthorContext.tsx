@@ -1,11 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-
-// Definir os tipos de autores e funções
-interface Author {
-  id: number;
-  name: string;
-  email?: string;
-}
+import { Author } from "../interfaces/Author";
 
 interface AuthorContextProps {
   authors: Author[];
@@ -13,7 +7,6 @@ interface AuthorContextProps {
   removeAuthor: (id: number) => void;
 }
 
-// Criar o contexto
 const AuthorContext = createContext<AuthorContextProps | undefined>(undefined);
 
 export const useAuthors = () => {

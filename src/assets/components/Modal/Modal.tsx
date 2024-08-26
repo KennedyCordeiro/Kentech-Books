@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { ReactNode, ButtonHTMLAttributes } from "react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
-const Fade = keyframes`
+const ModalAnimation = keyframes`
     0% {
       transform: translateZ(-80px);
       opacity: 0;
@@ -43,7 +43,7 @@ const ModalDiv = styled.div`
     z-index: 10;
     align-items: center;
     justify-content: center;
-    animation: ${Fade} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    animation: ${ModalAnimation} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   }
 `;
 
@@ -58,7 +58,7 @@ export const Content = styled.div`
   min-height: 30vh;
   background: var(--primary-color);
   padding: 1em 1.5rem;
-  border: 2px solid #fff;
+  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2em;
   flex-direction: column;
 
@@ -70,7 +70,7 @@ export const Content = styled.div`
     position: absolute;
     top: 4%;
     right: 4%;
-    width: 1.5rem;
+    width: 2rem;
     height: 1.5rem;
     cursor: pointer;
 

@@ -8,12 +8,9 @@ import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button } from "@radix-ui/themes";
 import { useBooks } from "../../context/BookContext"; // Importa o hook do contexto
-
-interface IFormInput {
-  title: string;
-  author: string;
-  pages?: number;
-}
+import { IFormInput } from "../../interfaces/IFormInput";
+import { Book } from "../../interfaces/Book";
+import ModalBook from "../../components/ModalBook/ModalBook";
 
 const GalleryBooks = () => {
   const [cardVisual, setCardVisual] = useState(true);
@@ -21,12 +18,23 @@ const GalleryBooks = () => {
   const styles = { width: "2rem", height: "2rem", cursor: "pointer" };
   const [openModal, setOpenModal] = useState(false); // Modal inicia fechado
   const { register, handleSubmit, reset } = useForm<IFormInput>();
-  const { books, addBook } = useBooks(); // Usa o contexto de livros
+  const { books, addBook, removeBook } = useBooks(); // Usa o contexto de livros
+  const [bookActive, setBookActive] = useState<Book>();
+  const [openModalBook, setOpenModalBook] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     addBook(data);
     handleModal();
     reset();
+  };
+
+  const handleSetActiveBook = (book: Book) => {
+    setBookActive(book);
+    setOpenModalBook(true);
+  };
+
+  const onRemoveBook = (idBook: number) => {
+    removeBook(idBook);
   };
 
   const handleModal = () => {
@@ -53,10 +61,10 @@ const GalleryBooks = () => {
           >
             Nome do Livro
             <TextField.Root {...register("title", { required: true })} />
-            Autor
+            Id do Autor
             <TextField.Root
               radius="large"
-              {...register("author", { required: true })}
+              {...register("idAuthor", { required: true })}
             />
             Número de páginas
             <TextField.Root
@@ -68,7 +76,7 @@ const GalleryBooks = () => {
               type="submit"
               variant="solid"
               size={"2"}
-              style={{ cursor: "pointer", width: "40%", margin: "1rem auto" }}
+              style={{ cursor: "pointer", width: "20%", margin: "1rem auto" }}
             >
               Cadastrar
             </Button>
@@ -84,6 +92,20 @@ const GalleryBooks = () => {
 
   return (
     <C.Container>
+      <C.CastleImg
+        src={CastleImg}
+        alt="Imagem castelo animado"
+        id="icon"
+        className="hidden"
+      />
+      {bookActive && (
+        <ModalBook
+          book={bookActive}
+          onOpen={openModalBook}
+          onClose={() => setOpenModalBook(false)}
+        />
+      )}
+
       <Modal onClose={handleModal} onOpen={openModal} title="Cadastrar Livros">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -91,10 +113,10 @@ const GalleryBooks = () => {
         >
           Nome do Livro
           <TextField.Root {...register("title", { required: true })} />
-          Autor
+          Id do Autor
           <TextField.Root
             radius="large"
-            {...register("author", { required: true })}
+            {...register("idAuthor", { required: true })}
           />
           Número de páginas
           <TextField.Root radius="large" type="number" {...register("pages")} />
@@ -108,12 +130,7 @@ const GalleryBooks = () => {
           </Button>
         </form>
       </Modal>
-      <C.CastleImg
-        src={CastleImg}
-        alt="Imagem castelo animado"
-        id="icon"
-        className="hidden"
-      />
+
       <C.Title>
         Todos os Livros
         {cardVisual ? (
@@ -126,11 +143,13 @@ const GalleryBooks = () => {
         <C.GalleryCards key={key}>
           {books.map((book, index) => (
             <Card
+              onClickCard={() => handleSetActiveBook(book)}
               key={book.id}
-              author={book.author}
+              author={book.idAuthor}
               title={book.title}
               pages={book.pages}
               delay={index * 0.2}
+              remove={() => onRemoveBook(book.id)}
             />
           ))}
         </C.GalleryCards>
@@ -138,16 +157,20 @@ const GalleryBooks = () => {
         <C.ResponsiveTable>
           <li className="table-header">
             <div className="col col-1">Título</div>
-            <div className="col col-2">Autor</div>
+            <div className="col col-2">Id do Autor</div>
             <div className="col col-3">Páginas</div>
           </li>
           {books.map((book) => (
-            <li className="table-row" key={book.id}>
+            <li
+              className="table-row"
+              key={book.id}
+              onClick={() => handleSetActiveBook(book)}
+            >
               <div className="col col-1 " data-label="Título">
                 {book.title}
               </div>
               <div className="col col-2" data-label="Autor">
-                {book.author}
+                {book.idAuthor}
               </div>
               <div className="col col-3" data-label="Páginas">
                 {book.pages}

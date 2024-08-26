@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 
 export const CardContainer = styled.div`
   width: 100%;
+  cursor: pointer;
   height: 26rem;
   display: flex;
   flex-direction: column;
@@ -13,13 +14,23 @@ export const CardContainer = styled.div`
   background: var(--primary-color);
   box-shadow: 9px 4px 4px 6px rgba(0, 0, 0, 0.25);
   transition: all 0.4s ease-in-out;
-
+  position: relative;
   img {
     width: 55%;
   }
 
   &:hover {
     transform: scale(1.02);
+  }
+
+  .trash {
+    width: 1.3rem;
+    height: 1.3rem;
+    cursor: pointer;
+    color: var(--text-color);
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 `;
 
@@ -37,6 +48,10 @@ export const Title = styled.div`
   font-weight: 600;
   line-height: normal;
   text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 `;
 
 export const Line = styled.div`

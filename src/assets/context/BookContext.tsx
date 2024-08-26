@@ -1,37 +1,47 @@
-// BookContext.tsx
-
-import React, { createContext, useState, ReactNode, useContext } from "react";
-
-// Define o tipo para o contexto
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  pages?: number;
-}
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from "react";
+import { Book } from "../interfaces/Book";
 
 interface BookContextType {
   books: Book[];
   addBook: (book: Omit<Book, "id">) => void;
   removeBook: (id: number) => void;
-  nextId: number; // Adiciona o contador de IDs
+  nextId: number;
+  getBooksFromAuthor: (authorId: string) => void;
 }
 
-// Inicializa o contexto com valores padrão
 const BookContext = createContext<BookContextType | undefined>(undefined);
 
 export const BookProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [nextId, setNextId] = useState<number>(books.length + 1); // Inicializa o próximo ID
+  const [books, setBooks] = useState<Book[]>(() => {
+    const storedBooks = localStorage.getItem("books");
+    return storedBooks ? JSON.parse(storedBooks) : [];
+  });
+
+  const [nextId, setNextId] = useState<number>(books.length + 1);
+
+  useEffect(() => {
+    localStorage.setItem("books", JSON.stringify(books));
+  }, [books]);
 
   const addBook = (book: Omit<Book, "id">) => {
     setBooks((prevBooks) => {
       const newBook = { id: nextId, ...book };
-      setNextId((prevId) => prevId + 1); // Incrementa o próximo ID
+      setNextId((prevId) => prevId + 1);
       return [...prevBooks, newBook];
     });
+  };
+
+  const getBooksFromAuthor = (authorId: string): Book[] => {
+    const filteredBooks = books.filter((book) => book.idAuthor === authorId);
+    return filteredBooks;
   };
 
   const removeBook = (id: number) => {
@@ -39,13 +49,14 @@ export const BookProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <BookContext.Provider value={{ books, addBook, removeBook, nextId }}>
+    <BookContext.Provider
+      value={{ books, addBook, removeBook, nextId, getBooksFromAuthor }}
+    >
       {children}
     </BookContext.Provider>
   );
 };
 
-// Hook para usar o contexto
 export const useBooks = () => {
   const context = useContext(BookContext);
   if (!context) {
