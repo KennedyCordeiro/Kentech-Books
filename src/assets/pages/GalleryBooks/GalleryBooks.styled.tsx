@@ -12,17 +12,22 @@ export const Container = styled.section`
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 2rem;
+  position: relative;
 `;
 
 export const Title = styled.div`
   font-family: Montserrat;
   font-size: 2.5rem;
   font-weight: 700;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   line-height: normal;
   display: flex;
   gap: 1rem;
   align-items: center;
+
+  @media (width <= 1024px) {
+    margin: 1rem 0;
+  }
 `;
 
 export const GalleryCards = styled.div`
@@ -33,12 +38,14 @@ export const GalleryCards = styled.div`
   height: auto;
   row-gap: 2rem;
   column-gap: 2rem;
+  z-index: 1;
 `;
 
 export const ResponsiveTable = styled.ul`
   width: 85%;
   margin: 0;
   padding: 0;
+  z-index: 1;
 
   li {
     border-radius: 3px;
@@ -85,5 +92,22 @@ export const ResponsiveTable = styled.ul`
       display: flex;
       padding: 10px 0;
     }
+  }
+`;
+
+export const CastleImg = styled.img`
+  top: 10%;
+  left: -20px;
+  z-index: 0;
+  position: absolute;
+`;
+
+export const DivButtons = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+
+  @media (width <= 1024px) {
+    gap: 1rem;
   }
 `;

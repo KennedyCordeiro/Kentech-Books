@@ -10,11 +10,10 @@ export const CardContainer = styled.div`
   overflow: hidden;
   gap: 1rem;
   border-radius: 1.4375rem;
-  background: rgba(255, 255, 255, 0.2);
-
+  background: var(--primary-color);
   box-shadow: 9px 4px 4px 6px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(5.800000190734863px);
   transition: all 0.4s ease-in-out;
+
   img {
     width: 55%;
   }
