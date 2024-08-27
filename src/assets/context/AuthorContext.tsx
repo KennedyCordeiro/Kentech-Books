@@ -1,10 +1,16 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { Author } from "../interfaces/Author";
 
 interface AuthorContextType {
   authors: Author[];
   addAuthor: (author: Omit<Author, "id">) => void;
-  removeAuthor: (id: number) => void;
+  removeAuthor: (id: string) => void;
 }
 
 const AuthorContext = createContext<AuthorContextType | undefined>(undefined);
@@ -12,14 +18,26 @@ const AuthorContext = createContext<AuthorContextType | undefined>(undefined);
 export const AuthorProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [authors, setAuthors] = useState<Author[]>([]);
+  // Carregar autores do localStorage no início
+  const [authors, setAuthors] = useState<Author[]>(() => {
+    const storedAuthors = localStorage.getItem("authors");
+    return storedAuthors ? JSON.parse(storedAuthors) : [];
+  });
+
+  // Atualizar localStorage sempre que a lista de autores mudar
+  useEffect(() => {
+    localStorage.setItem("authors", JSON.stringify(authors));
+  }, [authors]);
 
   const addAuthor = (author: Omit<Author, "id">) => {
-    const newAuthor = { id: authors.length + 1, ...author };
-    setAuthors((prevAuthors) => [...prevAuthors, newAuthor]);
+    const newAuthor: Author = {
+      id: (authors.length + 1).toString(),
+      ...author,
+    }; // Garantindo que newAuthor é do tipo Author
+    setAuthors((prevAuthors) => [...prevAuthors, newAuthor]); // prevAuthors é do tipo Author[]
   };
 
-  const removeAuthor = (id: number) => {
+  const removeAuthor = (id: string) => {
     setAuthors((prevAuthors) =>
       prevAuthors.filter((author) => author.id !== id)
     );

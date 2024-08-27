@@ -118,3 +118,8 @@ export const DivButtons = styled.div`
     gap: 1rem;
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: red;
+  width: 100%;
+`;

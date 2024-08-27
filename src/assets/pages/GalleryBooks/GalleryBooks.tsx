@@ -7,7 +7,7 @@ import ButtonLoadingMore from "../../components/Buttons/ButtonRemove";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button } from "@radix-ui/themes";
-import { useBooks } from "../../context/BookContext"; // Importa o hook do contexto
+import { useBooks } from "../../context/BookContext";
 import { IFormInput } from "../../interfaces/IFormInput";
 import { Book } from "../../interfaces/Book";
 import ModalBook from "../../components/ModalBook/ModalBook";
@@ -19,14 +19,17 @@ const GalleryBooks = () => {
   const styles = { width: "2rem", height: "2rem", cursor: "pointer" };
   const [openModal, setOpenModal] = useState(false);
   const { register, handleSubmit, reset } = useForm<IFormInput>();
-  const { books, addBook } = useBooks();
+  const { books, addBook, error, resetError } = useBooks();
   const [bookActive, setBookActive] = useState<Book>();
   const [openModalBook, setOpenModalBook] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     addBook(data);
-    setOpenModal(false);
-    reset();
+    console.log(error);
+    if (error.length > 0) {
+      setOpenModal(false);
+      reset();
+    }
   };
 
   const handleSetActiveBook = (book: Book) => {
@@ -36,13 +39,44 @@ const GalleryBooks = () => {
 
   const handleModal = () => {
     setOpenModal(!openModal);
+    reset();
+    resetError();
   };
 
   const handleTypeVisual = () => {
     setCardVisual(!cardVisual);
-    setKey((prevKey) => prevKey + 1); // Atualiza a chave para forçar re-renderização
+    setKey((prevKey) => prevKey + 1);
   };
 
+  const renderBookFormModal = () => (
+    <Modal onClose={handleModal} onOpen={openModal} title="Cadastrar Livros">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+      >
+        Nome do Livro
+        <TextField.Root {...register("title", { required: true })} />
+        Id do Autor
+        <TextField.Root
+          radius="large"
+          {...register("idAuthor", { required: true })}
+        />
+        Número de páginas
+        <TextField.Root radius="large" type="number" {...register("pages")} />
+        {error && <C.ErrorMessage>{error}</C.ErrorMessage>} {/* Exibe o erro */}
+        <Button
+          type="submit"
+          variant="solid"
+          size={"2"}
+          style={{ cursor: "pointer", width: "40%", margin: "1rem auto" }}
+        >
+          Cadastrar
+        </Button>
+      </form>
+    </Modal>
+  );
+
+  // Verifica se não há livros cadastrados
   if (books.length === 0) {
     return (
       <C.Container id="books">
@@ -61,39 +95,7 @@ const GalleryBooks = () => {
         >
           Ainda não temos Livros cadastrados{" "}
         </C.Title>
-        <Modal
-          onClose={handleModal}
-          onOpen={openModal}
-          title="Cadastrar Livros"
-        >
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-          >
-            Nome do Livro
-            <TextField.Root {...register("title", { required: true })} />
-            Id do Autor
-            <TextField.Root
-              radius="large"
-              {...register("idAuthor", { required: true })}
-            />
-            Número de páginas
-            <TextField.Root
-              radius="large"
-              type="number"
-              {...register("pages")}
-            />
-            <Button
-              type="submit"
-              variant="solid"
-              size={"2"}
-              style={{ cursor: "pointer", width: "20%", margin: "1rem auto" }}
-            >
-              Cadastrar
-            </Button>
-          </form>
-        </Modal>
-
+        {renderBookFormModal()} {/* Usa o Modal centralizado */}
         <ButtonLoadingMore img={false} onClick={handleModal}>
           Cadastrar Livros
         </ButtonLoadingMore>
@@ -116,32 +118,7 @@ const GalleryBooks = () => {
           onClose={() => setOpenModalBook(false)}
         />
       )}
-
-      <Modal onClose={handleModal} onOpen={openModal} title="Cadastrar Livros">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-        >
-          Nome do Livro
-          <TextField.Root {...register("title", { required: true })} />
-          Id do Autor
-          <TextField.Root
-            radius="large"
-            {...register("idAuthor", { required: true })}
-          />
-          Número de páginas
-          <TextField.Root radius="large" type="number" {...register("pages")} />
-          <Button
-            type="submit"
-            variant="solid"
-            size={"2"}
-            style={{ cursor: "pointer", width: "40%", margin: "1rem auto" }}
-          >
-            Cadastrar
-          </Button>
-        </form>
-      </Modal>
-
+      {renderBookFormModal()} {/* Usa o Modal centralizado */}
       <C.Title>
         Todos os Livros
         {cardVisual ? (
@@ -152,7 +129,7 @@ const GalleryBooks = () => {
       </C.Title>
       {cardVisual ? (
         <C.GalleryCards key={key}>
-          {books.map((book, index) => (
+          {books.map((book: Book, index: number) => (
             <Card
               onClickCard={() => handleSetActiveBook(book)}
               key={book.id}
@@ -170,7 +147,7 @@ const GalleryBooks = () => {
             <div className="col col-2">Id do Autor</div>
             <div className="col col-3">Páginas</div>
           </li>
-          {books.map((book) => (
+          {books.map((book: Book) => (
             <li
               className="table-row"
               key={book.id}

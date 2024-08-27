@@ -1,11 +1,14 @@
 import * as C from "./Home.styled";
 import ButtonStarted from "../../components/Buttons/ButtonStarted";
 import Books from "../../images/Books.png";
+import CloudImg from "../../images/nuvens.png";
 
 const Home = () => {
   return (
-    <C.Container id="home">
-      <C.Content className="hidden">
+    <C.Container>
+      <C.CloudImg src={CloudImg} className="hidden" id="cloudLeft" />
+      <C.CloudImgRight src={CloudImg} className="hidden" id="cloudRight" />
+      <C.Content>
         <p>Olá</p>
         Bem vindo a Kentech Books
         <a href="#authors">

@@ -10,14 +10,14 @@ import { AuthorProvider } from "./assets/context/AuthorContext";
 function App() {
   return (
     <Theme>
-      <BookProvider>
-        <AuthorProvider>
+      <AuthorProvider>
+        <BookProvider>
           <ObserverComponent />
           <Home />
           <GalleryBooks />
           <GalleryAuthors />
-        </AuthorProvider>
-      </BookProvider>
+        </BookProvider>
+      </AuthorProvider>
     </Theme>
   );
 }

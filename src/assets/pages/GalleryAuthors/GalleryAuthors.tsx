@@ -1,17 +1,17 @@
 import { useState } from "react";
-import * as C from "./GalleryAuthors.styled";
+import * as C from "../GalleryBooks/GalleryBooks.styled";
 import ButtonLoadingMore from "../../components/Buttons/ButtonRemove";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button } from "@radix-ui/themes";
-import { useAuthors } from "../../context/AuthorContext"; // Hook para o contexto dos autores
+import { useAuthors } from "../../context/AuthorContext";
 import { Author } from "../../interfaces/Author";
 import ModalAuthor from "../../components/ModalAuthor/ModalAuthor";
 import ButtonStarted from "../../components/Buttons/ButtonStarted";
 
 const GalleryAuthors = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { register, handleSubmit, reset } = useForm<Author>(); // Alterado para a interface Author
+  const { register, handleSubmit, reset } = useForm<Author>();
   const { authors, addAuthor } = useAuthors();
   const [authorActive, setAuthorActive] = useState<Author>();
   const [openModalAuthor, setOpenModalAuthor] = useState(false);
@@ -42,7 +42,7 @@ const GalleryAuthors = () => {
           }}
         >
           Ainda não temos Autores cadastrados
-          <br /> Vamos mudar isso :)
+          <br /> Vamos mudar isso?
         </C.Title>
 
         <Modal
@@ -123,6 +123,7 @@ const GalleryAuthors = () => {
         <li className="table-header">
           <div className="col col-1">Nome</div>
           <div className="col col-2">Email</div>
+          <div className="col col-2">id</div>
         </li>
         {authors.map((author) => (
           <li
@@ -134,7 +135,10 @@ const GalleryAuthors = () => {
               {author.name}
             </div>
             <div className="col col-2" data-label="Email">
-              {author.email || "Não informado"}
+              {author.email || "Email Não informado"}
+            </div>
+            <div className="col col-3" data-label="id">
+              {author.id || "Não informado"}
             </div>
           </li>
         ))}

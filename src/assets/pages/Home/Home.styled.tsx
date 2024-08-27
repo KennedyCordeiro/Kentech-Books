@@ -48,3 +48,25 @@ export const Content = styled.div`
     text-align: center;
   }
 `;
+
+export const CloudImg = styled.img`
+  position: absolute;
+  left: -200px;
+  width: 25%;
+  z-index: 2;
+  top: 50%;
+  @media (width <= 1024px) {
+    left: -40px;
+    width: 30%;
+  }
+`;
+
+export const CloudImgRight = styled(CloudImg)`
+  right: -200px;
+  left: auto;
+
+  @media (width <= 1024px) {
+    right: -45px;
+    width: 30%;
+  }
+`;
