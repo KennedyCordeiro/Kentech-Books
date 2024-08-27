@@ -71,6 +71,8 @@ const GalleryAuthors = () => {
               type="email"
               {...register("email")}
             />
+            id do Autor
+            <TextField.Root radius="large" type="text" {...register("id")} />
             <Button
               type="submit"
               variant="solid"
@@ -112,6 +114,8 @@ const GalleryAuthors = () => {
           <TextField.Root {...register("name", { required: true })} />
           Email do Autor
           <TextField.Root radius="large" type="email" {...register("email")} />
+          id do Autor
+          <TextField.Root radius="large" type="text" {...register("id")} />
           <Button
             type="submit"
             variant="solid"
@@ -123,46 +127,28 @@ const GalleryAuthors = () => {
         </form>
       </Modal>
 
-      <C.Title>
-        Todos os Autores
-        {cardVisual ? (
-          <TableIcon style={styles} onClick={handleTypeVisual} />
-        ) : (
-          <CardStackIcon style={styles} onClick={handleTypeVisual} />
-        )}
-      </C.Title>
-      {cardVisual ? (
-        <C.GalleryCards key={key}>
-          {authors.map((author, index) => (
-            <C.CardAuthor
-              key={author.id}
-              style={{ animationDelay: `${index * 0.2}s` }}
-              onClick={() => handleSetActiveAuthor(author)}
-            />
-          ))}
-        </C.GalleryCards>
-      ) : (
-        <C.ResponsiveTable>
-          <li className="table-header">
-            <div className="col col-1">Nome</div>
-            <div className="col col-2">Email</div>
+      <C.Title>Todos os Autores</C.Title>
+      <C.ResponsiveTable>
+        <li className="table-header">
+          <div className="col col-1">Nome</div>
+          <div className="col col-2">Email</div>
+        </li>
+        {authors.map((author) => (
+          <li
+            className="table-row"
+            key={author.id}
+            onClick={() => handleSetActiveAuthor(author)}
+          >
+            <div className="col col-1 " data-label="Nome">
+              {author.name}
+            </div>
+            <div className="col col-2" data-label="Email">
+              {author.email || "Não informado"}
+            </div>
           </li>
-          {authors.map((author) => (
-            <li
-              className="table-row"
-              key={author.id}
-              onClick={() => handleSetActiveAuthor(author)}
-            >
-              <div className="col col-1 " data-label="Nome">
-                {author.name}
-              </div>
-              <div className="col col-2" data-label="Email">
-                {author.email || "Não informado"}
-              </div>
-            </li>
-          ))}
-        </C.ResponsiveTable>
-      )}
+        ))}
+      </C.ResponsiveTable>
+
       <C.DivButtons>
         <ButtonStarted onClick={handleModal}>Cadastrar autores</ButtonStarted>
       </C.DivButtons>

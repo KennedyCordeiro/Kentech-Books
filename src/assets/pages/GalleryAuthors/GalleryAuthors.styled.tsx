@@ -113,4 +113,9 @@ export const DivButtons = styled.div`
   }
 `;
 
-export const CardAuthor = styled.div``;
+export const CardAuthor = styled.div`
+  img {
+    border-radius: 50%;
+    height: 40%;
+  }
+`;

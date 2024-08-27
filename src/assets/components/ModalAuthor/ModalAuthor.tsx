@@ -5,6 +5,7 @@ import { useBooks } from "../../context/BookContext";
 import ButtonRemove from "../Buttons/ButtonRemove";
 import { useState } from "react";
 import { Author } from "../../interfaces/Author";
+import { useAuthors } from "../../context/AuthorContext";
 
 const ModalAnimation = keyframes`
     0% {
@@ -145,11 +146,11 @@ interface ModalAuthorProps {
 }
 
 const ModalAuthor = ({ author, onOpen = false, onClose }: ModalAuthorProps) => {
-  const { removeBook } = useBooks();
+  const { removeAuthor } = useAuthors();
   const [onExclude, setOnExclude] = useState(false);
 
   const handleRemoveBook = () => {
-    removeBook(author.id);
+    removeAuthor(author.id);
     setOnExclude(false);
     onClose();
   };
