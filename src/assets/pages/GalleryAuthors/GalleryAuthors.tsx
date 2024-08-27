@@ -1,6 +1,5 @@
 import { useState } from "react";
 import * as C from "./GalleryAuthors.styled";
-import { TableIcon, CardStackIcon } from "@radix-ui/react-icons";
 import ButtonLoadingMore from "../../components/Buttons/ButtonRemove";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -11,9 +10,6 @@ import ModalAuthor from "../../components/ModalAuthor/ModalAuthor";
 import ButtonStarted from "../../components/Buttons/ButtonStarted";
 
 const GalleryAuthors = () => {
-  const [cardVisual, setCardVisual] = useState(true);
-  const [key, setKey] = useState(0);
-  const styles = { width: "2rem", height: "2rem", cursor: "pointer" };
   const [openModal, setOpenModal] = useState(false);
   const { register, handleSubmit, reset } = useForm<Author>(); // Alterado para a interface Author
   const { authors, addAuthor } = useAuthors();
@@ -33,11 +29,6 @@ const GalleryAuthors = () => {
 
   const handleModal = () => {
     setOpenModal(!openModal);
-  };
-
-  const handleTypeVisual = () => {
-    setCardVisual(!cardVisual);
-    setKey((prevKey) => prevKey + 1); // Força re-renderização
   };
 
   if (authors.length === 0) {

@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import ModalImg from "../../images/ModalBook.png";
-import { useBooks } from "../../context/BookContext";
 import ButtonRemove from "../Buttons/ButtonRemove";
 import { useState } from "react";
 import { Author } from "../../interfaces/Author";
