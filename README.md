@@ -36,7 +36,7 @@ Ao clonar o projeto instale suas dependencias com npm i
     
 ## Stack utilizada
 
-**Front-end:** React, React Context API, Radix UI, Typescript, Styled Components
+**Front-end:** React, React Context API, Radix UI, Typescript, Styled Components, Prettier, ESLint, Figma, 
 
 **PS: Só fui notar que não era necessário back end depois de já te-lo criado 😅
 
