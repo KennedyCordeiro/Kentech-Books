@@ -49,8 +49,8 @@ const GalleryBooks = () => {
         <C.CastleImg
           src={CastleImg}
           alt="Imagem castelo animado"
-          // id="icon"
-          // className="hidden"
+          id="icon"
+          className="hidden"
         />
         <C.Title
           style={{
@@ -106,8 +106,8 @@ const GalleryBooks = () => {
       <C.CastleImg
         src={CastleImg}
         alt="Imagem castelo animado"
-        // id="icon"
-        // className="hidden"
+        id="icon"
+        className="hidden"
       />
       {bookActive && (
         <ModalBook
