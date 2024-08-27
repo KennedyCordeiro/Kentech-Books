@@ -8,7 +8,7 @@ const Home = () => {
       <C.Content className="hidden">
         <p>Olá</p>
         Bem vindo a Kentech Books
-        <a href="#books">
+        <a href="#authors">
           <ButtonStarted style={{ marginTop: "1.5rem" }}>
             Vamos Começar
           </ButtonStarted>{" "}

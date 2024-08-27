@@ -42,7 +42,7 @@ const GalleryAuthors = () => {
 
   if (authors.length === 0) {
     return (
-      <C.Container>
+      <C.Container id="authors">
         <C.Title
           style={{
             fontSize: "2rem",
@@ -51,6 +51,7 @@ const GalleryAuthors = () => {
           }}
         >
           Ainda não temos Autores cadastrados
+          <br /> Vamos mudar isso :)
         </C.Title>
 
         <Modal
