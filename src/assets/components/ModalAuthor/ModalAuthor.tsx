@@ -1,10 +1,10 @@
 import styled, { keyframes } from "styled-components";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { Book } from "../../interfaces/Book";
 import ModalImg from "../../images/ModalBook.png";
 import { useBooks } from "../../context/BookContext";
 import ButtonRemove from "../Buttons/ButtonRemove";
 import { useState } from "react";
+import { Author } from "../../interfaces/Author";
 
 const ModalAnimation = keyframes`
     0% {
@@ -138,18 +138,18 @@ const InfoBooks = styled.div`
   }
 `;
 
-interface ModalBookProps {
+interface ModalAuthorProps {
   onOpen: Boolean;
-  book: Book;
+  author: Author;
   onClose: () => void;
 }
 
-const ModalBook = ({ book, onOpen = false, onClose }: ModalBookProps) => {
+const ModalAuthor = ({ author, onOpen = false, onClose }: ModalAuthorProps) => {
   const { removeBook } = useBooks();
   const [onExclude, setOnExclude] = useState(false);
 
   const handleRemoveBook = () => {
-    removeBook(book.id);
+    removeBook(author.id);
     setOnExclude(false);
     onClose();
   };
@@ -167,22 +167,22 @@ const ModalBook = ({ book, onOpen = false, onClose }: ModalBookProps) => {
         />
         {!onExclude ? (
           <>
-            <Title>{book.title}</Title>
+            <Title>{author.name}</Title>
             <Line />
             <InfoBooks>
-              Numero de páginas {book.pages}
-              <div className="idAuthor">Id do autor: {book.idAuthor}</div>
+              Id do author {author.id}
+              <div className="idAuthor">Email: {author.email}</div>
             </InfoBooks>
             <div style={{ margin: "1rem 0" }}>
               <ButtonRemove img onClick={() => setOnExclude(true)}>
-                Remover livro
+                Remover autor
               </ButtonRemove>
             </div>
           </>
         ) : (
           <>
             <Title style={{ fontSize: "2rem" }}>
-              Tem certeza que deseja excluir o livro {book.title}?
+              Tem certeza que deseja excluir o autor {author.name}?
             </Title>
             <div style={{ display: "flex", gap: "1rem", marginTop: "1.4rem" }}>
               <ButtonRemove img={false} action={handleRemoveBook}>
@@ -203,4 +203,4 @@ const ModalBook = ({ book, onOpen = false, onClose }: ModalBookProps) => {
   );
 };
 
-export default ModalBook;
+export default ModalAuthor;

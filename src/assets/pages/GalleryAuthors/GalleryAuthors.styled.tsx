@@ -101,20 +101,16 @@ export const CastleImg = styled.img`
   left: -20px;
   z-index: 0;
   position: absolute;
-
-  @media (width <= 1024px) {
-    width: 50%;
-    top: 30%;
-    left: -60px;
-  }
 `;
 
 export const DivButtons = styled.div`
   display: flex;
   gap: 2rem;
-  margin: 3rem 0;
+  margin: 2rem 0;
 
   @media (width <= 1024px) {
     gap: 1rem;
   }
 `;
+
+export const CardAuthor = styled.div``;

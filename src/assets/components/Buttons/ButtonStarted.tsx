@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const ButtonStart = styled.button`
   background-color: var(--secondary-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
   width: fit-content;
   padding: 0.6rem 2rem;
   border-radius: 0.8rem;

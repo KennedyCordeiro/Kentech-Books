@@ -1,10 +1,12 @@
 :root {
   font-family: Poppins, sans-serif, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
-  --primary-color: #f5f5f5;
+  --primary-color: #002e59;
   --secondary-color: #a62338;
   --extra-color: #007e8c;
-  --text-color: #002e59;
+
+  --text-color: #f5f5f5;
+
   margin: 0;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

@@ -1,18 +1,21 @@
+import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactNode, ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const ButtonStart = styled.button`
-  background-color: var(--extra-color);
-  font-size: 1.1rem;
+  background-color: var(--secondary-color);
   width: fit-content;
-  padding: 0.6rem 2rem;
-  border-radius: 0.8rem;
+  padding: 0.6rem 1.6rem;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   border: 0;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   color: var(--primary-color);
   font-family: Poppins;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -30,14 +33,16 @@ const ButtonStart = styled.button`
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   action?: () => void;
   children: ReactNode;
+  img: boolean;
 }
 
-const ButtonLoadingMore = ({ action, children, ...props }: ButtonProps) => {
+const ButtonRemove = ({ img, action, children, ...props }: ButtonProps) => {
   return (
     <ButtonStart onClick={action} {...props}>
+      {img && <TrashIcon style={{ width: "1.3rem", height: "1.3rem" }} />}{" "}
       {children}
     </ButtonStart>
   );
 };
 
-export default ButtonLoadingMore;
+export default ButtonRemove;

@@ -54,7 +54,7 @@ export const Content = styled.div`
   animation: ${slideInEllipticTop} 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
   animation-delay: 0.2s;
-  width: 50vw;
+  width: 35vw;
   min-height: 30vh;
   background: var(--primary-color);
   padding: 1em 1.5rem;

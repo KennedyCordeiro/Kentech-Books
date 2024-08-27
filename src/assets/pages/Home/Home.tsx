@@ -8,17 +8,17 @@ const Home = () => {
       <C.Content className="hidden">
         <p>Olá</p>
         Bem vindo a Kentech Books
-        <ButtonStarted style={{ marginTop: "1.5rem" }}>
-          Vamos Começar
-        </ButtonStarted>{" "}
-        <a href="#home">
-          <C.BooksImg
-            className="hidden"
-            src={Books}
-            alt="Livros"
-            style={{ animationDelay: ".3s" }}
-          />
+        <a href="#books">
+          <ButtonStarted style={{ marginTop: "1.5rem" }}>
+            Vamos Começar
+          </ButtonStarted>{" "}
         </a>
+        <C.BooksImg
+          className="hidden"
+          src={Books}
+          alt="Livros"
+          style={{ animationDelay: ".3s" }}
+        />
       </C.Content>
     </C.Container>
   );

@@ -1,38 +1,28 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 import { Author } from "../interfaces/Author";
 
-interface AuthorContextProps {
+interface AuthorContextType {
   authors: Author[];
-  addAuthor: (author: Author) => void;
+  addAuthor: (author: Omit<Author, "id">) => void;
   removeAuthor: (id: number) => void;
 }
 
-const AuthorContext = createContext<AuthorContextProps | undefined>(undefined);
+const AuthorContext = createContext<AuthorContextType | undefined>(undefined);
 
-export const useAuthors = () => {
-  const context = useContext(AuthorContext);
-  if (!context) {
-    throw new Error("useAuthors must be used within an AuthorProvider");
-  }
-  return context;
-};
+export const AuthorProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [authors, setAuthors] = useState<Author[]>([]);
 
-export const AuthorProvider = ({ children }: { children: ReactNode }) => {
-  const [authors, setAuthors] = useState<Author[]>(() => {
-    const storedAuthors = localStorage.getItem("authors");
-    return storedAuthors ? JSON.parse(storedAuthors) : [];
-  });
-
-  const addAuthor = (author: Author) => {
-    const newAuthors = [...authors, author];
-    setAuthors(newAuthors);
-    localStorage.setItem("authors", JSON.stringify(newAuthors));
+  const addAuthor = (author: Omit<Author, "id">) => {
+    const newAuthor = { id: authors.length + 1, ...author };
+    setAuthors((prevAuthors) => [...prevAuthors, newAuthor]);
   };
 
   const removeAuthor = (id: number) => {
-    const filteredAuthors = authors.filter((author) => author.id !== id);
-    setAuthors(filteredAuthors);
-    localStorage.setItem("authors", JSON.stringify(filteredAuthors));
+    setAuthors((prevAuthors) =>
+      prevAuthors.filter((author) => author.id !== id)
+    );
   };
 
   return (
@@ -40,4 +30,12 @@ export const AuthorProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </AuthorContext.Provider>
   );
+};
+
+export const useAuthors = () => {
+  const context = useContext(AuthorContext);
+  if (!context) {
+    throw new Error("useAuthors must be used within an AuthorProvider");
+  }
+  return context;
 };

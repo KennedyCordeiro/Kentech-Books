@@ -3,7 +3,7 @@ import * as C from "./GalleryBooks.styled";
 import Card from "../../components/Card/Card";
 import { TableIcon, CardStackIcon } from "@radix-ui/react-icons";
 import CastleImg from "../../images/Castle image.png";
-import ButtonLoadingMore from "../../components/Buttons/ButtonLoadingMore";
+import ButtonLoadingMore from "../../components/Buttons/ButtonRemove";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button } from "@radix-ui/themes";
@@ -11,30 +11,27 @@ import { useBooks } from "../../context/BookContext"; // Importa o hook do conte
 import { IFormInput } from "../../interfaces/IFormInput";
 import { Book } from "../../interfaces/Book";
 import ModalBook from "../../components/ModalBook/ModalBook";
+import ButtonStarted from "../../components/Buttons/ButtonStarted";
 
 const GalleryBooks = () => {
   const [cardVisual, setCardVisual] = useState(true);
-  const [key, setKey] = useState(0); // Estado para forçar re-renderização
+  const [key, setKey] = useState(0);
   const styles = { width: "2rem", height: "2rem", cursor: "pointer" };
-  const [openModal, setOpenModal] = useState(false); // Modal inicia fechado
+  const [openModal, setOpenModal] = useState(false);
   const { register, handleSubmit, reset } = useForm<IFormInput>();
-  const { books, addBook, removeBook } = useBooks(); // Usa o contexto de livros
+  const { books, addBook } = useBooks();
   const [bookActive, setBookActive] = useState<Book>();
   const [openModalBook, setOpenModalBook] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     addBook(data);
-    handleModal();
+    setOpenModal(false);
     reset();
   };
 
   const handleSetActiveBook = (book: Book) => {
     setBookActive(book);
     setOpenModalBook(true);
-  };
-
-  const onRemoveBook = (idBook: number) => {
-    removeBook(idBook);
   };
 
   const handleModal = () => {
@@ -48,8 +45,22 @@ const GalleryBooks = () => {
 
   if (books.length === 0) {
     return (
-      <C.Container>
-        <C.Title>Ainda não temos Livros cadastrados </C.Title>
+      <C.Container id="books">
+        <C.CastleImg
+          src={CastleImg}
+          alt="Imagem castelo animado"
+          // id="icon"
+          // className="hidden"
+        />
+        <C.Title
+          style={{
+            fontSize: "2rem",
+            textAlign: "center",
+            padding: "0.5rem 1rem ",
+          }}
+        >
+          Ainda não temos Livros cadastrados{" "}
+        </C.Title>
         <Modal
           onClose={handleModal}
           onOpen={openModal}
@@ -83,8 +94,8 @@ const GalleryBooks = () => {
           </form>
         </Modal>
 
-        <ButtonLoadingMore onClick={handleModal}>
-          Cadastrar livros
+        <ButtonLoadingMore img={false} onClick={handleModal}>
+          Cadastrar Livros
         </ButtonLoadingMore>
       </C.Container>
     );
@@ -95,8 +106,8 @@ const GalleryBooks = () => {
       <C.CastleImg
         src={CastleImg}
         alt="Imagem castelo animado"
-        id="icon"
-        className="hidden"
+        // id="icon"
+        // className="hidden"
       />
       {bookActive && (
         <ModalBook
@@ -149,7 +160,6 @@ const GalleryBooks = () => {
               title={book.title}
               pages={book.pages}
               delay={index * 0.2}
-              remove={() => onRemoveBook(book.id)}
             />
           ))}
         </C.GalleryCards>
@@ -180,9 +190,7 @@ const GalleryBooks = () => {
         </C.ResponsiveTable>
       )}
       <C.DivButtons>
-        <ButtonLoadingMore onClick={handleModal}>
-          Cadastrar livros
-        </ButtonLoadingMore>
+        <ButtonStarted onClick={handleModal}>Cadastrar livros</ButtonStarted>
       </C.DivButtons>
     </C.Container>
   );
